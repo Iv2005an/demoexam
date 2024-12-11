@@ -1,8 +1,10 @@
-from enum import Enum
 from datetime import date
+from enum import Enum
 
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+
+from database.database import SessionFactory
 
 
 class Base(DeclarativeBase): pass
@@ -27,6 +29,20 @@ class Partner(Base):
     address: Mapped[str]
     inn: Mapped[str] = mapped_column(String(10))
     rate: Mapped[int]
+
+    def save(self):
+        with SessionFactory() as session:
+            session.add(self)
+            session.commit()
+
+    def get_sales(self):
+        with SessionFactory() as session:
+            return session.query(Sale).filter(Sale.partner == self).all()
+
+    @staticmethod
+    def get_all():
+        with SessionFactory() as session:
+            return session.query(Partner).all()
 
 
 class ProductType(Base):
