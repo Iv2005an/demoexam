@@ -51,9 +51,10 @@ class Product(Base):
 class Sale(Base):
     __tablename__ = "sales"
 
-    product_id: Mapped[int] = mapped_column(ForeignKey("products.id", ondelete="CASCADE"), primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    product_id: Mapped[int] = mapped_column(ForeignKey("products.id", ondelete="CASCADE"))
     product: Mapped["Product"] = relationship()
-    partner_id: Mapped[int] = mapped_column(ForeignKey("partners.id", ondelete="CASCADE"), primary_key=True)
+    partner_id: Mapped[int] = mapped_column(ForeignKey("partners.id", ondelete="CASCADE"))
     partner: Mapped["Partner"] = relationship()
     count: Mapped[int]
     sale_date: Mapped[date]
