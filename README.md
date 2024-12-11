@@ -191,12 +191,12 @@ def init_db():
     Base.metadata.create_all(engine)
 ```
 
-### Методы взаимодействия с БД
+### Взаимодействия с БД
 
-Поскольку были грамотно спроектированы модели, необходимо дописать 3 метода в классе `Partner`:
+Поскольку были грамотно спроектированы модели, необходимо дописать свойство и 2 метода в классе `Partner`:
 
-- `save` для добавление и редактирования партнёра
-- `get_sales` для получения продаж партнёра
+- `sales` свойство для получения продаж партнёра
+- `save` метод для добавления и редактирования партнёра
 - `get_all` статический метод для получения всех партнёров
 
 ```python
@@ -213,14 +213,15 @@ class Partner(Base):
     inn: Mapped[str] = mapped_column(String(10))
     rate: Mapped[int]
 
+    @property
+    def sales(self):
+        with SessionFactory() as session:
+            return session.query(Sale).filter(Sale.partner == self).all()
+
     def save(self):
         with SessionFactory() as session:
             session.add(self)
             session.commit()
-
-    def get_sales(self):
-        with SessionFactory() as session:
-            return session.query(Sale).filter(Sale.partner == self).all()
 
     @staticmethod
     def get_all():

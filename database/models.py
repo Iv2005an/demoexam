@@ -30,14 +30,15 @@ class Partner(Base):
     inn: Mapped[str] = mapped_column(String(10))
     rate: Mapped[int]
 
+    @property
+    def sales(self):
+        with SessionFactory() as session:
+            return session.query(Sale).filter(Sale.partner == self).all()
+
     def save(self):
         with SessionFactory() as session:
             session.add(self)
             session.commit()
-
-    def get_sales(self):
-        with SessionFactory() as session:
-            return session.query(Sale).filter(Sale.partner == self).all()
 
     @staticmethod
     def get_all():
