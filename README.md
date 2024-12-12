@@ -44,49 +44,6 @@ class ProductType(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     ratio: Mapped[float]
-
-```
-
-### Пользовательские типы данных
-
-PosgreSQL поддерживает пользовательские типы данных. В данном случае мы можем использовать перечисление для типа
-партнёра.
-
-Перечисление представляет собой класс Python, который наследуется от `Enum`
-
-В нём по аналогии с полями класса указываются связки значений(`<то что в БД> = "<то что на экране>"`)
-
-При инициализации БД будут созданы таблицы, а также этот тип данных
-
-```python
-from enum import Enum
-
-from sqlalchemy import String
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-
-
-class Base(DeclarativeBase): pass
-
-
-class PartnerType(Enum):
-    ZAO = "ЗАО"
-    OOO = "ООО"
-    OAO = "ОАО"
-    PAO = "ПАО"
-
-
-class Partner(Base):
-    __tablename__ = "partners"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    type: Mapped["PartnerType"]
-    name: Mapped[str]
-    director: Mapped[str]
-    email: Mapped[str]
-    phone: Mapped[str] = mapped_column(String(13))
-    address: Mapped[str]
-    inn: Mapped[str] = mapped_column(String(10))
-    rate: Mapped[int]
 ```
 
 ### Связи
@@ -204,7 +161,7 @@ class Partner(Base):
     __tablename__ = "partners"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    type: Mapped["PartnerType"]
+    type: Mapped[str]
     name: Mapped[str]
     director: Mapped[str]
     email: Mapped[str]
@@ -232,6 +189,7 @@ class Partner(Base):
 ### Запуск
 
 Файл `main.py`:
+
 ```python
 from database.database import init_db
 

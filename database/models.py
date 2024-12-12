@@ -10,18 +10,11 @@ from database.database import SessionFactory
 class Base(DeclarativeBase): pass
 
 
-class PartnerType(Enum):
-    ZAO = "ЗАО"
-    OOO = "ООО"
-    OAO = "ОАО"
-    PAO = "ПАО"
-
-
 class Partner(Base):
     __tablename__ = "partners"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    type: Mapped["PartnerType"]
+    type: Mapped[str]
     name: Mapped[str]
     director: Mapped[str]
     email: Mapped[str]
