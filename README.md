@@ -1,6 +1,6 @@
-# Первоначальная настройка 
+# Первоначальная настройка
 
-Сначала необходимо создать виртуальное окружение, а затем загрузить зависимости `pip install -r requirements.txt` 
+Сначала необходимо создать виртуальное окружение, а затем загрузить зависимости `pip install -r requirements.txt`
 
 # Работа с БД
 
@@ -93,7 +93,7 @@ class Product(Base):
     min_cost: Mapped[float]
 ```
 
-[Полный код моделей](https://github.com/Iv2005an/demoexam/blob/main/database/models.py)
+[Полный код моделей](database/models.py)
 
 ## Инициализация БД
 
@@ -120,7 +120,7 @@ def init_db():
     Base.metadata.create_all(engine)
   ```
 
-Для конфигурирования БД был создан простенький [файл](https://github.com/Iv2005an/demoexam/blob/main/database/config.py)
+Для конфигурирования БД был создан простенький [файл](database/config.py)
 `config.py`
 
 В нём находится функция в которую подставляются необходимые значения
@@ -135,7 +135,7 @@ def get_database_url() -> str:
     return f"postgresql+psycopg://{LOGIN}:{PASSWORD}@localhost:5432/{DATABASE_NAME}"
 ```
 
-Итоговый [файл](https://github.com/Iv2005an/demoexam/blob/main/database/database.py):
+Итоговый [файл](database/database.py):
 
 ```python
 from sqlalchemy import create_engine
