@@ -212,7 +212,7 @@ if __name__ == '__main__':
 
 ## Документация
 
-- [Официальная](https://habr.com/ru/articles/799203/)
+- [Официальная](https://doc.qt.io/qtforpython-6/tutorials/basictutorial/uifiles.html)
 - [Хабр](https://habr.com/ru/articles/799203/)
 
 ## Главное окно
