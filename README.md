@@ -208,3 +208,142 @@ if __name__ == '__main__':
 осталась та же, таблицы только названием отличаются, в видео показаны возможные при импорте ошибки, так что
 рекомендуется к просмотру.
 
+# Интерфейс
+
+## Документация
+
+- [Официальная](https://habr.com/ru/articles/799203/)
+- [Хабр](https://habr.com/ru/articles/799203/)
+
+## Главное окно
+
+Окно представляет собой класс наследуемый от `QMainWindow`
+
+```python
+from PySide6.QtWidgets import QMainWindow
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+```
+
+## Создание виджетов
+
+Все объекты интерфейса наследуются от `QWidget`
+
+Для их проектирования используется утилита `QT Widgets Designer`. Для её запуска необходимо выполнить команду в
+терминале `pyside6-designer`
+
+После запуска утилиты необходимо выбрать шаблон виджета и нажать создать.
+
+![Создание виджета](docs/img/create_widget.png)
+
+### Страница партнёров
+
+Затем переименовываем форму в окно партнёров
+
+![Переименование окна](docs/img/rename_form.png)
+
+### Компоновка
+
+Интерфейс строится сверху вниз, поэтому:
+
+- Добавляем в форму вертикальный слой
+- `ПКМ по форме->Компоновка->Скомпоновать по вертикали`. Слой растянется по размеру формы.
+
+  ![Компоновка](docs/img/vertical_layout.png)
+
+### Заголовок
+
+- Для центровки заголовка добавляем горизонтальный слой
+- В него помещаем `Label`
+- Задаём ему имя `pageTitle`
+
+  ![Переименование заголовка](docs/img/rename_page_title.png)
+
+- Устанавливаем горизонтальную и вертикальную политику в `Maximum`
+
+  ![Заголовок](docs/img/page_title_position.png)
+
+### Зона с партнёрами
+
+- Под слой заголовка добавляем `Scroll Area`, под лой заголовка. Она автоматически займёт большую область страницы
+
+  ![Добавления зоны партнёров](docs/img/add_scroll_area.png)
+
+- Меняем имя на `partnersArea`
+
+  ![Переименование зоны партнёров](docs/img/rename_scroll_area.png)
+
+### Добавляем в проект
+
+- Сохраняем страницу в директорию `ui`
+- Конвертируем в python класс командой `pyside6-uic ui/partners_page.ui -o ui/ui_partners_page.py`
+- Создаём класс `PartnersPage` и наследуем его от сгенерируемого класса
+- В конструкторе вызываем функцию `setupUi`
+- И устанавливаем текст заголовка
+
+```python
+from PySide6.QtWidgets import QWidget
+
+from ui.ui_partners_page import Ui_partnersPage
+
+
+class PartnersPage(QWidget, Ui_partnersPage):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.pageTitle.setText("Страница партнёров")
+```
+
+## Запуск приложения
+
+Инициализация интерфейса перед запуском происходит в [файле](ui/app.py) `app.py`
+
+- Создаём единственный экземпляр класса приложения `QApplication` и передаём в него аргументы `sys.argv` при запуске,
+  они представляют список, поэтому можно передать пустой список `QApplication([])`
+    - Задаём иконку приложению с помощью метода `setWindowIcon`, в неё передаём объект класса `QIcon`, которому передаём
+      путь до иконки
+- Создаём главное окно
+    - Настраиваем ему минимальный размер, значения подбираем, чтобы интерфейс не перекрывался
+    - Задаём заголовок
+    - Создаём виджет страницы партёров `PartnersPage` и устанавливаем его центральным с помощью метода
+      `setCentralWidget`
+    - Отображаем окно методом `show`
+- Запускаем приложение `sys.exit(app.exec())`
+
+```python
+import sys
+
+from PySide6 import QtWidgets
+from PySide6.QtGui import QIcon
+
+from ui.main_window import MainWindow
+from ui.partners_page import PartnersPage
+
+
+def run_app():
+    app = QtWidgets.QApplication(sys.argv)
+    app.setWindowIcon(QIcon('resources/icons/master_pol.ico'))
+
+    main_window = MainWindow()
+    main_window.setMinimumSize(500, 250)
+    main_window.setWindowTitle('Мастер пол')
+    partners_page = PartnersPage()
+    main_window.setCentralWidget(partners_page)
+    main_window.show()
+
+    sys.exit(app.exec())
+```
+
+- Добавляем вызов функции `run_app` в [файл](main.py) `main.py`
+
+```python
+from database.database import init_db
+from ui.app import run_app
+
+if __name__ == '__main__':
+    init_db()
+    run_app()
+```
