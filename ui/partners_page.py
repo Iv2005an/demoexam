@@ -7,4 +7,4 @@ class PartnersPage(QWidget, Ui_partnersPage):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pageTitle.setText("Страница партнёров")
+        self.pageTitle.setText("Список партнёров")
