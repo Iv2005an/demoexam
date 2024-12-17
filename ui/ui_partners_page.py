@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'partners_page.ui'
+## Form generated from reading UI file 'partners_pageWXpwHb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.1
 ##
@@ -36,6 +36,9 @@ class Ui_partnersPage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pageTitle.sizePolicy().hasHeightForWidth())
         self.pageTitle.setSizePolicy(sizePolicy)
+        font = QFont()
+        font.setPointSize(12)
+        self.pageTitle.setFont(font)
 
         self.horizontalLayout.addWidget(self.pageTitle)
 
@@ -47,16 +50,18 @@ class Ui_partnersPage(object):
 
         self.partnersArea = QScrollArea(partnersPage)
         self.partnersArea.setObjectName(u"partnersArea")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.partnersArea.setWidgetResizable(True)
+        self.partnersAreaLayout = QWidget()
+        self.partnersAreaLayout.setObjectName(u"partnersAreaLayout")
+        self.partnersAreaLayout.setGeometry(QRect(0, 0, 380, 18))
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.partnersArea.sizePolicy().hasHeightForWidth())
-        self.partnersArea.setSizePolicy(sizePolicy1)
-        self.partnersArea.setWidgetResizable(True)
-        self.scrollAreaWidgetContents = QWidget()
-        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 380, 254))
-        self.partnersArea.setWidget(self.scrollAreaWidgetContents)
+        sizePolicy1.setHeightForWidth(self.partnersAreaLayout.sizePolicy().hasHeightForWidth())
+        self.partnersAreaLayout.setSizePolicy(sizePolicy1)
+        self.verticalLayout_3 = QVBoxLayout(self.partnersAreaLayout)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.partnersArea.setWidget(self.partnersAreaLayout)
 
         self.verticalLayout_2.addWidget(self.partnersArea)
 
