@@ -300,7 +300,19 @@ class MainWindow(QMainWindow):
 ### Добавляем в проект
 
 - Сохраняем страницу в директорию `ui`
-- Конвертируем в python класс командой `pyside6-uic ui/partners_page.ui -o ui/ui_partners_page.py`
+- Для конвертации в python класс существует 2 варианта:
+
+1. Конвертируем в python класс командой `pyside6-uic ui/partners_page.ui -o ui/ui_partners_page.py`
+2. Графически в утилите:
+    - `Форма->Показать код Python`
+
+      ![Экспорт 1](docs/img/export_ui_1.png)
+
+    - `Дискета->Сохраняем в папку ui с заменой`
+
+      ![Экспорт 2](docs/img/export_ui_2.png)
+
+
 - Создаём класс `PartnersPage` и наследуем его от сгенерируемого класса
 - В конструкторе вызываем функцию `setupUi`
 - И устанавливаем текст заголовка
