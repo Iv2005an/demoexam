@@ -219,6 +219,9 @@ if __name__ == '__main__':
 
 Окно представляет собой класс наследуемый от `QMainWindow`
 
+- Настраиваем минимальный размер, значения подбираем, чтобы интерфейс не перекрывался
+- Задаём заголовок
+
 ```python
 from PySide6.QtWidgets import QMainWindow
 
@@ -226,6 +229,8 @@ from PySide6.QtWidgets import QMainWindow
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setMinimumSize(500, 250)
+        self.setWindowTitle('Мастер пол')
 ```
 
 ## Создание виджетов
@@ -306,8 +311,6 @@ class PartnersPage(QWidget, Ui_partnersPage):
     - Задаём иконку приложению с помощью метода `setWindowIcon`, в неё передаём объект класса `QIcon`, которому передаём
       путь до иконки
 - Создаём главное окно
-    - Настраиваем ему минимальный размер, значения подбираем, чтобы интерфейс не перекрывался
-    - Задаём заголовок
     - Создаём виджет страницы партёров `PartnersPage` и устанавливаем его центральным с помощью метода
       `setCentralWidget`
     - Отображаем окно методом `show`
@@ -328,10 +331,7 @@ def run_app():
     app.setWindowIcon(QIcon('resources/icons/master_pol.ico'))
 
     main_window = MainWindow()
-    main_window.setMinimumSize(500, 250)
-    main_window.setWindowTitle('Мастер пол')
-    partners_page = PartnersPage()
-    main_window.setCentralWidget(partners_page)
+    main_window.setCentralWidget(PartnersPage())
     main_window.show()
 
     sys.exit(app.exec())

@@ -12,10 +12,7 @@ def run_app():
     app.setWindowIcon(QIcon('resources/icons/master_pol.ico'))
 
     main_window = MainWindow()
-    main_window.setMinimumSize(500, 250)
-    main_window.setWindowTitle('Мастер пол')
-    partners_page = PartnersPage()
-    main_window.setCentralWidget(partners_page)
+    main_window.setCentralWidget(PartnersPage())
     main_window.show()
 
     sys.exit(app.exec())
