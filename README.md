@@ -297,7 +297,126 @@ class MainWindow(QMainWindow):
 
   ![Вертикальная политика](docs/img/scroll_area_layout_vertical_policy.png)
 
-### Добавляем в проект
+## Карточка партнёра
+
+- Добавляем горизонтальный слой
+- `ПКМ по форме->Компоновка->Скомпоновать по горизонтали`
+- Добавляем вертикальный слой и в него 4 `Label` согласно макету
+- Справа после слоя добавляем ещё один `Label`
+- У правого `Label` вертикальная и горизонтальная политики в `Maximum`
+- У формы минимальная и максимальная высота `125`
+- Для первого `Lavel` в слое размер `12`
+- Задаём логичные имена объектов
+
+В итоге получится:
+
+![Карточка партнёра](docs/img/partner_card_without_style.png)
+
+### Стилизация
+
+- `ПКМ по горизонтальному слою->Преобразовать в->QWidget`
+- Задаём ему имя, к примеру: `cardLayout`, к нему будут далее применяться стили
+- `ПКМ по cardLayout->Изменить stylesheet...`
+  Добавляем следующий код:
+
+```css
+#cardLayout{
+    border: 2px solid black;
+    background: #F4E8D3;
+}
+
+#cardLayout:hover{
+    background: #67BA80;
+}
+```
+
+- Через `#` идёт обращение к имени объекта
+- Цвета даны в приложении 2
+- `:hover` - псевдокласс, с помощью которого указывается стиль при наведении курсора
+- В дизайнере, должны отобразиться изменения, в том числе смена цвета при наведении
+- Белый цвет текста и чёрный цвет фона меняется с помощью сены темы:
+
+Для принудительной светлой темы необходимо добавить `app.setStyle("windowsvista")` в `run_app()`
+
+```python
+def run_app():
+    app = QtWidgets.QApplication(sys.argv)
+    app.setWindowIcon(QIcon('resources/icons/master_pol.ico'))
+    app.setStyle("windowsvista")
+    ...
+```
+
+### Работа с карточками
+
+- Создаём класс карточки партнёра по аналогии со страницей:
+
+```python
+from PySide6.QtWidgets import QWidget
+
+from database.models import Partner
+from ui.ui_partner_card import Ui_partnerCard
+
+
+class PartnerCard(QWidget, Ui_partnerCard):
+    def __init__(self, partner: Partner):
+        super().__init__()
+        self.setupUi(self)
+        self.title.setText(f"{partner.type} | {partner.name}")
+        self.director.setText(f"Директор: {partner.director}")
+        self.phone.setText(f"Телефон: +7 {partner.phone}")
+        self.rate.setText(f"Рейтинг: {partner.rate}")
+        self.discount.setText(f"{partner.discount}%")
+```
+
+- Дополняем конструктор страницы партнёров, **обратите внимание** виджеты добавляются не на прямую в `ScrollArea`, а в
+  её дочерний слой, у которого нужно вызвать метод `layout()`
+
+```python
+from PySide6.QtWidgets import QWidget
+
+from database.models import Partner
+from ui.partner_card import PartnerCard
+from ui.ui_partners_page import Ui_partnersPage
+
+
+class PartnersPage(QWidget, Ui_partnersPage):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.pageTitle.setText("Список партнёров")
+        partners = Partner.get_all()
+        partners_area = self.partnersAreaLayout.layout()
+        for partner in partners:
+            partners_area.addWidget(PartnerCard(partner))
+```
+
+- Для отображения скидки дописываем свойство `discount` в модель `Partner`
+
+```python
+class Partner(Base):
+    ...
+
+    @property
+    def discount(self) -> int:
+        sales_count = 0
+        for product in self.sales:
+            sales_count += product.count
+        if 10000 < sales_count <= 50000:
+            return 5
+        elif 50000 < sales_count <= 300000:
+            return 10
+        elif 300000 < sales_count:
+            return 15
+        return 0
+
+    ...
+```
+
+В итоге получаем:
+
+![Страница партнёров](docs/img/partners_page_screen.png)
+
+## Добавление в проект
 
 - Сохраняем страницу в директорию `ui`
 - Для конвертации в python класс существует 2 варианта:
