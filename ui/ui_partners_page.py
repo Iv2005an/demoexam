@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'partners_pageWXpwHb.ui'
+## Form generated from reading UI file 'partners_pagerWSYxC.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.1
 ##
@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QScrollArea,
-    QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
+    QScrollArea, QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_partnersPage(object):
     def setupUi(self, partnersPage):
@@ -48,6 +48,11 @@ class Ui_partnersPage(object):
 
         self.verticalLayout_2.addLayout(self.verticalLayout)
 
+        self.addButton = QPushButton(partnersPage)
+        self.addButton.setObjectName(u"addButton")
+
+        self.verticalLayout_2.addWidget(self.addButton)
+
         self.partnersArea = QScrollArea(partnersPage)
         self.partnersArea.setObjectName(u"partnersArea")
         self.partnersArea.setWidgetResizable(True)
@@ -74,5 +79,6 @@ class Ui_partnersPage(object):
     def retranslateUi(self, partnersPage):
         partnersPage.setWindowTitle(QCoreApplication.translate("partnersPage", u"Form", None))
         self.pageTitle.setText(QCoreApplication.translate("partnersPage", u"TextLabel", None))
+        self.addButton.setText(QCoreApplication.translate("partnersPage", u"PushButton", None))
     # retranslateUi
 

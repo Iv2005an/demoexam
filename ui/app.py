@@ -13,7 +13,7 @@ def run_app():
     app.setStyle("windowsvista")
 
     main_window = MainWindow()
-    main_window.setCentralWidget(PartnersPage())
+    main_window.setCentralWidget(PartnersPage(main_window))
     main_window.show()
 
     sys.exit(app.exec())

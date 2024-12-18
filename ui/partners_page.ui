@@ -41,6 +41,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QPushButton" name="addButton">
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QScrollArea" name="partnersArea">
      <property name="widgetResizable">
       <bool>true</bool>
