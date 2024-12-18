@@ -1,5 +1,4 @@
 from datetime import date
-from enum import Enum
 
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
@@ -22,6 +21,19 @@ class Partner(Base):
     address: Mapped[str]
     inn: Mapped[str] = mapped_column(String(10))
     rate: Mapped[int]
+
+    @property
+    def discount(self) -> int:
+        sales_count = 0
+        for product in self.sales:
+            sales_count += product.count
+        if 10000 < sales_count <= 50000:
+            return 5
+        elif 50000 < sales_count <= 300000:
+            return 10
+        elif 300000 < sales_count:
+            return 15
+        return 0
 
     @property
     def sales(self):

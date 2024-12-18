@@ -10,6 +10,7 @@ from ui.partners_page import PartnersPage
 def run_app():
     app = QtWidgets.QApplication(sys.argv)
     app.setWindowIcon(QIcon('resources/icons/master_pol.ico'))
+    app.setStyle("windowsvista")
 
     main_window = MainWindow()
     main_window.setCentralWidget(PartnersPage())
